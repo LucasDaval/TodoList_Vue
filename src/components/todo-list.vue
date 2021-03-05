@@ -1,28 +1,45 @@
 <template>
     <ul id="todoList">
         <li v-for="(task,index) in tasks" :key="index">
-            <input v-bind:class="{ active: checked }" type="checkbox" id="">
+            <input type="checkbox" id="">
             <label for="">{{ task.name }}</label>
-            <button><i class="fas fa-trash-alt"></i></button>
+            <button v-on:click="remover(index)"><i class="fas fa-trash-alt"></i></button>
         </li>
     </ul>
 </template>
 
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
 <script>
 export default {
     name: 'ToDoList', 
-    // methods: {
-    //     remover(index){
-    //         this.events.splice(index, 1);
-    //     }
-    // },
+    
     props: {
-        tasks:{
+        tasks:{     // Nouveau tableau qui stock listTasks du todo-card par le v-bind
             type: Array
         },
-    }
+    },
+    methods: {
+        // Event to remove a task by index
+        remover(index){
+            this.$emit('remover', {index})
+        },
+
+        // Event to try to change checkbox state
+        checkChange(task){
+            if (task.check) {
+                return this.task.check = false
+            }else{
+                return this.task.check = true
+            }
+        }
+    },
 }
 </script>
+
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
 <style scoped>
     .fas{
@@ -31,6 +48,10 @@ export default {
     input{
         border-radius: 10%;
     }
+    .lineThrough{
+        text-decoration: line-through;
+    }
+
     button{
         background-color: red;
         margin: 0 4vh;
