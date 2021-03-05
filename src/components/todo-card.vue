@@ -5,24 +5,25 @@
             <a href="" class="has-text-primary"><strong>VueJs ToDo List</strong></a>
             <p>{{ nbTask }} tâches</p>
         </header>
-        <NewToDo />
-        <p v-for="item in tasks" :key="item">{{ item.name }}</p>
+        <NewToDo @sendTask="newTask"/>
+        <ToDoList v-bind:tasks="listTasks"/>
     </div>
 </template>
 
 <script>
 import NewToDo from "./todo-new.vue" 
+import ToDoList from "./todo-list.vue" 
 
 export default {
     name: 'ToDoCard',
     data () {
         return{
-            tasks: []
-        }
-        
+            listTasks: []
+        }        
     },
     components: {
-        NewToDo
+        NewToDo,
+        ToDoList
     },
     computed: {
         date: function(){
@@ -33,14 +34,17 @@ export default {
         },
 
         nbTask: function(){
-            return 0
+            return this.listTasks.length 
+            // return 0 
         }
     },
     methods: {
-        sendTask(task){
-            this.tasks.push(task)
+        newTask(task){
+            // console.log("Mère : " + task);
+            this.listTasks.push(task);
+            // console.log(this.listTasks);
         }
-    }
+    },
 }
 </script>
 
@@ -49,7 +53,8 @@ export default {
         background-color: white;
 
         width: 80%;
-        height: 50vh;
+        min-height: 50vh;
+        height: fit-content;
         border-radius: 10px;
 
         margin: 4vh auto;
@@ -59,4 +64,8 @@ export default {
         padding: 1rem;
         justify-content: space-between;
     }
+
+    /* p{
+        text-decoration: line-through;
+    } */
 </style>

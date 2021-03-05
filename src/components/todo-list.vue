@@ -1,32 +1,55 @@
 <template>
-    <div class="card">
-        <header class="card-header">
-            <p>Date</p>
-            <a href="" class="has-text-primary"><strong>VueJs ToDo List</strong></a>
-            <p>Nb tâches</p>
-        </header>
-    </div>
+    <ul id="todoList">
+        <li v-for="(task,index) in tasks" :key="index">
+            <input v-bind:class="{ active: checked }" type="checkbox" id="">
+            <label for="">{{ task.name }}</label>
+            <button><i class="fas fa-trash-alt"></i></button>
+        </li>
+    </ul>
 </template>
 
 <script>
 export default {
-    name: 'ToDoList'
+    name: 'ToDoList', 
+    // methods: {
+    //     remover(index){
+    //         this.events.splice(index, 1);
+    //     }
+    // },
+    props: {
+        tasks:{
+            type: Array
+        },
+    }
 }
 </script>
 
 <style scoped>
-    .card{
-        background-color: white;
+    .fas{
+        color: white;
+    }
+    input{
+        border-radius: 10%;
+    }
+    button{
+        background-color: red;
+        margin: 0 4vh;
+        padding: 0.2em 0.5em;
+        border: none;
+        border-radius: 50%;
+        font-size: 1rem;
+        cursor: pointer;
+    }
 
+    #todoList{
         width: 80%;
-        height: 50vh;
-        border-radius: 10px;
-
         margin: 4vh auto;
     }
 
-    .card-header{
-        padding: 1rem;
+    #todoList li{
+        display: flex;
         justify-content: space-between;
+        align-items: center;
+        margin: 2vh 0;
     }
 </style>
